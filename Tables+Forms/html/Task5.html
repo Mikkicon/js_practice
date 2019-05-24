@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="../styles/tables.css" />
+    <title>Tables</title>
+  </head>
+  <body>
+    <form action="#" method="post">
+      <table>
+        <tr class="blueHeader">
+          <th>Name</th>
+          <th>Value</th>
+        </tr>
+        <tr>
+          <td>Name</td>
+          <td><input type="text" name="name" /></td>
+        </tr>
+        <tr>
+          <td>Sex</td>
+          <td>
+            <input type="radio" name="sex" id="male" />Male <br />
+            <input type="radio" name="sex" id="female" /> Female
+          </td>
+        </tr>
+        <tr>
+          <td>Eye color</td>
+          <td>
+            <select name="eyes">
+              <option value="green">green</option>
+              <option value="blue">blue</option>
+              <option value="brown">brown</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>Check all that apply</td>
+          <td>
+            <input type="checkbox" name="6" />Over 6 feet tall <br />
+            <input type="checkbox" name="200" /> Over 200 pounds
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            Describe your athletic ability: <br />
+            <textarea name="description" cols="40" rows="5"></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" class="submitButton">
+            <input type="submit" value="Enter my information" />
+          </td>
+        </tr>
+      </table>
+    </form>
+  </body>
+</html>

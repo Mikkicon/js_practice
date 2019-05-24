@@ -1,0 +1,42 @@
+.blueTable td {
+  border: 1px solid blue;
+  border-collapse: collapse;
+  text-align: center;
+}
+.orangeTable td {
+  border: 2px solid orange;
+  text-align: left;
+}
+.pinkTable td {
+  border: 1px solid pink;
+  text-align: center;
+  vertical-align: middle;
+  width: 40px;
+  height: 40px;
+}
+
+table,
+tr,
+th,
+td {
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+.submitButton {
+  text-align: center;
+}
+.blueHeader th {
+  background-color: rgb(189, 189, 255);
+}
+.listTable td,
+tr,
+th,
+table {
+  border: none;
+}
+.olLeadingZeros {
+  list-style-type: decimal-leading-zero;
+}
+.listHeadings {
+  font-size: 1.5em;
+}

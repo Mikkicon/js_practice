@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="../styles/tables.css" />
+    <title>Tables</title>
+  </head>
+  <body>
+    <table class="blueTable">
+      <tr>
+        <td>foo</td>
+        <td>bar</td>
+        <td>baz</td>
+      </tr>
+      <tr>
+        <td>
+          <table class="orangeTable">
+            <tr>
+              <td>one</td>
+              <td>two</td>
+              <td>three</td>
+            </tr>
+            <tr>
+              <td>four</td>
+              <td>five</td>
+              <td>six</td>
+            </tr>
+            <tr>
+              <td>seven</td>
+              <td>eight</td>
+              <td>nine</td>
+            </tr>
+          </table>
+        </td>
+        <td colspan="2" rowspan="2">
+          <table class="pinkTable">
+            <tr>
+              <td>eins</td>
+              <td>zwei</td>
+              <td rowspan="2">drei <br />sechs</td>
+            </tr>
+            <tr>
+              <td>vier</td>
+              <td>fünf</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>abc</td>
+      </tr>
+    </table>
+  </body>
+</html>
