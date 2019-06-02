@@ -168,6 +168,7 @@ li:hover a::after {
 }
 .switch input[type="checkbox"]:checked + .slider {
   background-color: #0f0;
+  transition: all 0.4s;
 }
 .switch input[type="checkbox"]:checked + .slider::after {
   transform: translateX(26px);
@@ -188,6 +189,7 @@ li:hover a::after {
   background-color: white;
   border-radius: 34px;
   border: 1px solid #ccc;
+  transition: all 0.4s;
 }
 .slider::after {
   position: absolute;
