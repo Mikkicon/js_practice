@@ -1,0 +1,326 @@
+/* TAGS */
+
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background: mintcream;
+    margin: 0;
+}
+
+table {
+    margin: auto;
+    margin-top: 20px;
+    text-align: left;
+}
+
+section {
+    background: #fff;
+    margin-bottom: 10px;
+    padding: 10px;
+    box-shadow: 0 0 10px #ccc;
+    overflow: scroll;
+}
+
+input[type="submit"] {
+    width: 100%;
+    transition: all 0.4s;
+    height: 20px;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
+input[type="submit"]:hover {
+    background: #000;
+    transition: all 0.4s;
+    color: #fff;
+    cursor: pointer;
+}
+
+input[type="email"] {
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 100%;
+}
+
+textarea {
+    border-radius: 5px;
+    width: 100%;
+}
+
+td {
+    padding: 10px;
+}
+
+i {
+    font-size: 20px !important;
+}
+
+h3 {
+    text-align: center;
+    margin: 10px 0;
+}
+
+header {
+    background: #fff;
+    padding: 10px;
+    vertical-align: middle;
+    margin-bottom: 10px;
+}
+
+header img {
+    height: 50px;
+}
+
+img {
+    height: 100px;
+}
+
+h1 {
+    text-align: center;
+}
+
+footer {
+    padding: 30px;
+    background: #bbb;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+/* BURGER */
+
+i {
+    font-size: 30px !important;
+    cursor: pointer;
+}
+
+#open {
+    float: right;
+    margin: 15px;
+}
+
+#close {
+    float: right;
+    display: none;
+}
+
+input[id="burger"] {
+    opacity: 0;
+    position: absolute;
+    top: 25px;
+    right: 20px;
+    z-index: 50;
+    cursor: pointer;
+    height: 30px;
+    width: 30px;
+}
+
+input[id="burger"]:checked~.burgerMenu {
+    display: block;
+    transition: all 0.4s;
+}
+
+.burgerMenu {
+    display: none;
+    transition: all 0.4s;
+    z-index: 0;
+}
+
+.burgerMenu>a {
+    background: #000;
+    text-align: center;
+    position: relative;
+    display: block;
+    border-bottom: 1px solid white;
+    cursor: pointer;
+    width: 100%;
+    margin: auto;
+    color: #fff;
+    padding: 10px;
+    transition: all 0.4s;
+}
+
+
+/* DROPDOWN */
+
+.container {
+    width: 70%;
+    margin: auto;
+}
+
+.dropdownContainer {
+    display: none;
+    position: relative;
+    background: #000;
+    color: #fff;
+    margin-left: 60%;
+    cursor: default;
+    z-index: 100;
+}
+
+.contentContainer {
+    display: none;
+    position: relative;
+    background: #000;
+    color: #fff;
+    margin-left: 100%;
+}
+
+.dropdown2Lvl {
+    padding: 10px 20px;
+    cursor: default;
+    border-bottom: 1px solid white;
+}
+
+.content {
+    display: none;
+    position: absolute;
+    margin-left: 70%;
+    margin-top: -29px;
+    background: #000;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-bottom: 1px solid white;
+    text-decoration: none;
+}
+
+.dropdown1Lvl:hover .dropdown2Lvl {
+    display: block;
+}
+
+.dropdown1Lvl:hover .dropdownContainer {
+    position: absolute;
+    display: block;
+}
+
+.dropdown1Lvl:hover {
+    background: #000;
+    color: #fff;
+}
+
+.dropdown1Lvl {
+    position: relative;
+    display: inline-block;
+    padding: 10px;
+    cursor: default;
+}
+
+.dropdown2Lvl:hover .content {
+    display: block;
+}
+
+.dropdown2Lvl:hover .contentContainer {
+    display: block;
+}
+
+
+/* SLIDER */
+
+.imageContainer input {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    background: #eaf5ff;
+    cursor: pointer;
+    margin: 10px;
+}
+
+input[id="epamToggle"]:checked~#epam {
+    display: inline;
+}
+
+
+/* #slider img {
+    display: none;
+} */
+
+.line {
+    background: #000;
+    height: 5px;
+    width: 100%;
+}
+
+#main img {
+    margin: auto;
+}
+
+#main {
+    text-align: center;
+}
+
+#about {
+    margin: auto;
+    margin-bottom: 30px;
+}
+
+#feedback {
+    text-align: center;
+}
+
+#contacts>a {
+    margin: 20px 5%;
+}
+
+#contacts {
+    text-align: center;
+    padding: 20px;
+}
+
+#contacts h3 {
+    margin-bottom: 20px;
+}
+
+.advantage {
+    width: 170px;
+    display: inline-block;
+    margin: 10px;
+    padding: 10px;
+    background: #eaf5ff;
+    transition: all 0.4s;
+}
+
+.advantage:hover {
+    background: mintcream;
+    color: #111;
+    cursor: default;
+    box-shadow: 0 0 10px #888;
+    transition: all 0.4s;
+}
+
+.advantage div {
+    margin: 10px;
+    text-align: center;
+}
+
+.personInfo {
+    margin: 20px;
+    border-radius: 5px;
+    padding: 30px;
+    background: #eaf5ff;
+    display: inline-block;
+    box-shadow: 0 0 10px #888;
+}
+
+.personInfo img {
+    float: left;
+}
+
+.personInfo a {
+    display: block;
+    text-decoration: none;
+}
+
+@media (min-width: 960px) {
+    .container {
+        width: 900px;
+    }
+}
+
+@media (max-width: 320px) {
+    .container {
+        width: 320px;
+    }
+}
