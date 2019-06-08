@@ -224,18 +224,36 @@ input[id="burger"]:checked~.burgerMenu {
     height: 20px;
     border-radius: 100%;
     background: #eaf5ff;
+    /* position: absolute; */
     cursor: pointer;
     margin: 10px;
+    top: 70px;
+}
+
+.imageContainer {
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+}
+
+#epam {
+    /* position: absolute; */
+    transform: translateX(200);
+}
+
+#me {
+    /* position: absolute; */
+    transform: translateX(500);
 }
 
 input[id="epamToggle"]:checked~#epam {
-    display: inline;
+    transform: translateX(0);
+    transition: all 0.4s ease-in-out;
 }
 
-
-/* #slider img {
-    display: none;
-} */
+input[id="meToggle"]:checked~#me {
+    display: block;
+}
 
 .line {
     background: #000;

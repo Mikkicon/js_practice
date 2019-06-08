@@ -1,3 +1,212 @@
+body {
+    font-family: "Myriad Pro", Myriad, "Liberation Sans", "Nimbus Sans L", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.container {
+    background: #353535;
+    padding: 20px;
+}
+
+.card {
+    border-radius: 50px;
+    box-shadow: -15px 15px 3px #252525;
+    margin: 50px;
+    overflow: hidden;
+    width: 600px;
+}
+
+.card-head {
+    background: linear-gradient(to bottom right, rgb(255, 137, 69), rgb(152, 19, 19));
+    padding: 10px 50px 0 50px;
+    color: white;
+}
+
+.card-logo {
+    width: 100px;
+}
+
+h2 {
+    display: inline-block;
+    width: 50%;
+    font-weight: normal;
+}
+
+.product-img {
+    /* filter: drop-shadow(-150px 150px 200px #000); */
+    transform: rotate(0.1turn);
+    position: absolute;
+    left: 300px;
+    top: 200px;
+    z-index: 2;
+}
+
+.back-text {
+    color: #000;
+    opacity: 0.1;
+    font-size: 250px;
+    font-weight: bold;
+    margin-left: -70px;
+    height: 250px;
+}
+
+.card-body {
+    background: white;
+    padding: 50px 50px 80px 50px;
+    /* position: relative; */
+}
+
+.product-title {
+    font-size: 40px;
+    display: block;
+}
+
+.badge {
+    background: rgb(108, 228, 110);
+    color: white;
+    border-radius: 5px;
+    padding: 2px 10px 4px 10px;
+    position: absolute;
+    font-size: 15px;
+    top: 700px;
+    left: 500px;
+}
+
+.product-caption {
+    margin: 10px 0;
+    display: block;
+}
+
+#fifthStar {
+    opacity: 0.3;
+}
+
+.ul-size {
+    padding: 0;
+    margin: 0 0 0 -20px;
+}
+
+.ul-size li {
+    display: inline;
+}
+
+.ul-size li>a {
+    border-radius: 100%;
+    margin: 0 15px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.ul-size a:hover {
+    background: rgb(246, 104, 73);
+}
+
+.ul-size li>a.active {
+    background: rgb(246, 104, 73);
+}
+
+.ul-size a:hover {
+    color: white;
+}
+
+.ul-size li>a {
+    text-decoration: none;
+    color: black;
+    display: inline-block;
+    width: 30px;
+    text-align: center;
+    font-size: 25px;
+}
+
+.ul-color {
+    padding: 0;
+    margin: 40px 0 10px 0;
+}
+
+.ul-color li {
+    display: inline-block;
+    margin: 0 20px;
+}
+
+.ul-color li>a {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    background: green;
+    border-radius: 100%;
+    display: block;
+    padding: 3px;
+}
+
+.ul-color li>a.orange {
+    background: rgb(255, 104, 73);
+}
+
+.ul-color li>a.orange.active::after {
+    content: '';
+    position: absolute;
+    border-radius: 100%;
+    top: -13px;
+    left: -13px;
+    right: -11px;
+    bottom: -11px;
+    border: red 2px solid;
+}
+
+.ul-color li>a.green {
+    background: rgb(128, 228, 110);
+}
+
+.ul-color li>a.green.active::after {
+    content: '';
+    position: absolute;
+    border-radius: 100%;
+    top: -13px;
+    left: -13px;
+    right: -11px;
+    bottom: -11px;
+    border: green 2px solid;
+}
+
+.ul-color li>a.yellow {
+    background: rgb(255, 212, 75);
+}
+
+.ul-color li>a.orange.active::after {
+    content: '';
+    position: absolute;
+    border-radius: 100%;
+    top: -13px;
+    left: -13px;
+    right: -11px;
+    bottom: -11px;
+    border: orange 2px solid;
+}
+
+.product-price {
+    background: rgb(108, 228, 110);
+    color: white;
+    border-radius: 10px;
+    padding: 10px 40px 12px 40px;
+    position: absolute;
+    font-size: 40px;
+    left: 400px;
+    top: 1025px;
+}
+
+.product-price::after {
+    content: " ";
+    background: rgb(108, 228, 110);
+    position: absolute;
+    width: 85%;
+    height: 10px;
+    left: 0;
+    box-shadow: 0 10px 20px rgb(108, 228, 110);
+    border-radius: 10px;
+}
+
+
+/* SEARCH */
+
 .search {
     position: relative;
     margin: 50px;
