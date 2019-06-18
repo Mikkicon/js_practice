@@ -35,8 +35,9 @@ updAverage();
 
 function updAverage() {
     var avg = document.getElementById("average");
+    console.log(array);
+
     avg.innerHTML = array.reduce((a, b) => a + b.age, 0) / array.length;
-    document.getElementById("container").appendChild(avg);
 }
 
 function deleteLastRow() {
@@ -48,12 +49,13 @@ function deleteLastRow() {
 
 function addNewRow() {
     var newName = document.getElementById("newName").value;
-    var newAge = document.getElementById("newAge").value;
+    var newAge = Number(document.getElementById("newAge").value);
     console.log(newName, newAge);
     if (newName !== null && newName !== null) {
         array.push({ name: newName, age: newAge });
         insertCell(newName, newAge);
         updAmounts();
+        updAverage();
     }
 }
 
