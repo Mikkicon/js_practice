@@ -1,31 +1,4 @@
 "use strict";
-// Имеется массив объектов [{
-//     name: 'Саша',
-//     age: 15
-//    },{
-//     name: 'Артем',
-//     age: 27
-//    },{
-//     name: 'Андрей',
-//     age: 18
-//    }, {
-//     name: 'Ира',
-//     age: 15
-//    },{
-//     name: 'Алексей',
-//     age: 27
-//    },{
-//     name: 'Андрей',
-//     age: 18
-//    }]
-
-//    Вывести массив в таблицу.
-
-//    Имя | Возраст | Количество людей с этим именем
-
-//    Под таблицей выводить средний возраст всех людей.
-
-//    Так же, сделать возможным добавлять (и удалять) людей и автоматически перестраивать таблицу под новые данные
 
 var array = [{
         name: "Саша",
@@ -93,7 +66,6 @@ function insertCell(newName, newAge) {
     age.innerHTML = newAge;
     amount.innerHTML = array.filter(f => f.name === newName).length.toString();
 }
-updAmounts();
 
 function updAmounts() {
     console.log(table.rows.length);
