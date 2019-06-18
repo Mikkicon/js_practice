@@ -1,3 +1,4 @@
+"use strict";
 // Имеется массив объектов [{
 //     name: 'Саша',
 //     age: 15
@@ -76,9 +77,9 @@ function addNewRow() {
     var newName = document.getElementById("newName").value;
     var newAge = document.getElementById("newAge").value;
     console.log(newName, newAge);
-    if (name !== null && age !== null) {
+    if (newName !== null && newName !== null) {
         array.push({ name: newName, age: newAge });
-        insertCell();
+        insertCell(newName, newAge);
         updAmounts();
     }
 }
