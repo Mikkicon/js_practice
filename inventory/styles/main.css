@@ -87,6 +87,10 @@ img[src="../media/gear-btn.png"] {
     height: 50px;
 }
 
+.money table {
+    width: 100%;
+}
+
 .red {
     background: #900;
     top: 85%;
@@ -119,7 +123,7 @@ img[src="../media/gear-btn.png"] {
 
 /* RIGHT INVENTORY */
 
-.rightInv img {
+.rightInv img[ src="../media/bg_item-right.png"] {
     top: 20%;
     position: absolute;
 }
@@ -128,6 +132,13 @@ img[src="../media/gear-btn.png"] {
     background: #009;
     top: 85%;
     right: 3%;
+}
+
+.rightInv .money {
+    position: absolute;
+    top: 69%;
+    left: 70px;
+    width: 150px;
 }
 
 .rightInv {
@@ -140,4 +151,14 @@ img[src="../media/gear-btn.png"] {
     position: absolute;
     top: 547px;
     left: 18px;
+}
+
+.rightInv>table>tbody>tr>td {
+    width: 25px;
+    height: 25px;
+}
+
+.rightInv>table {
+    margin-left: 12px;
+    top: 45%;
 }
