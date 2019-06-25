@@ -1,7 +1,7 @@
 'use strict';
 
-var answer = confirm("For backward fibonacci press 'OK', for usual - 'Cancel");
-var amount = Number(prompt("How many numbers?"));
+var answer = confirm("Backward fibonacci: 'OK'; \nUsual: 'Cancel' \nFirst 10 numbers will be printed by default");
+var amount = 10;
 
 function* fibo({ back }) {
     let nMin1 = 1;
@@ -27,6 +27,9 @@ function* fibo({ back }) {
     }
 }
 const gen = fibo({ back: answer });
-for (let i = 0; i < amount; i++) {
-    console.log(gen.next().value);
+while (amount) {
+    for (let i = 0; i < amount; i++) {
+        console.log(gen.next().value);
+    }
+    amount = Number(prompt("How many more numbers?\nOr 'Cancel' to stop"));
 }
