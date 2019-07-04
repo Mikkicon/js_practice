@@ -4,11 +4,14 @@ const B = 100;
 var currentA = A;
 var currentB = B;
 var NUM = Math.floor(Math.random() * (B - A + 1)) + A;
-let userInput = null;
-let userInputParsed = null;
+var userInput = null;
+var userInputParsed = null;
+var counter = 0;
+
 console.log(A, B, "Computer's number: ", NUM);
 
 while (1) {
+  counter++;
   try {
     userInput = prompt(
       "Guess number in range " + currentA + " and " + currentB
@@ -28,14 +31,16 @@ while (1) {
     } else {
       if (
         confirm(
-          "CONGRATULATIONS! \
+          `CONGRATULATIONS! \
           \nYOU'VE GOT IT! \
-          \nDO YOU WANT TO PLAY MORE?"
+            \nIT TOOK YOU ${counter} TRIES \
+          \nDO YOU WANT TO PLAY MORE?`
         )
       ) {
         NUM = Math.floor(Math.random() * (B - A + 1)) + A;
         currentA = A;
         currentB = B;
+        counter = 0;
         console.log("Computer's number: ", NUM);
       } else {
         break;
