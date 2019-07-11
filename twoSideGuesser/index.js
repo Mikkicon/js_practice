@@ -13,99 +13,136 @@ var computerWon = false;
 var userWon = false;
 var counter = 0;
 
+var AElem = document.getElementById("A");
+var BElem = document.getElementById("B");
+var makeGuessBtnElem = document.getElementById("makeGuessBtn");
+var initialPhraseElem = document.getElementById("initialPhrase");
+var userGuessInptElem = document.getElementById("userGuessInpt");
+var computerGuessElem = document.getElementById("computerGuessH1");
+var computerAnswerElem = document.getElementById("computerAnswerH1");
+
 console.log(A, B, "Computer's number: ", NUM);
 
-document.getElementById("A").innerText = currentA;
-document.getElementById("B").innerText = currentB;
-toggleComputerButtons(true);
+AElem.innerText = currentA;
+BElem.innerText = currentB;
+setLessYesMoreBtnsTo(false);
+userGuessInptElem.focus();
 
-function less() {
-  if (userWon) {
-    currentUserB = Math.max(computerGuess - 1, currentUserB);
-    computerGuess =
-      Math.floor(Math.random() * (currentUserB - currentUserA + 1)) +
-      currentUserA;
-    document.getElementById("computerGuess").innerText =
-      "IS IT: " + String(computerGuess) + "?";
+function usersNumIsSmaller() {
+  if (computerGuess === 0) {
+    currentUserB = Math.min(computerGuess, currentUserB);
   } else {
     currentUserB = Math.min(computerGuess - 1, currentUserB);
-    document.getElementById("makeGuess").disabled = false;
-    toggleComputerButtons(true);
-    document.getElementById("computerGuess").innerText = "Hmmmmm...";
+  }
+  if (userWon) {
+    computerMakesAGuess();
+  } else {
+    passGuessToUser();
   }
 }
-function win() {
+function onComputerWin() {
   document.getElementById(
-    "computerGuess"
+    "computerGuessH1"
   ).innerText = `MAN, IT FEELS GOOD TO WIN IN ${counter} TRIES :)`;
-  toggleComputerButtons(true);
-  if (!userWon) document.getElementById("makeGuess").disabled = false;
+  setLessYesMoreBtnsTo(false);
+  if (!userWon) makeGuessBtnElem.disabled = false;
   computerWon = true;
+  if (userWon && computerWon && confirm("Would you like to play more?")) {
+    reSetupGame();
+  } else {
+    alert("Bye.");
+  }
 }
 
-function more() {
-  if (userWon) {
-    currentUserA = Math.max(computerGuess + 1, currentUserA);
-    computerGuess =
-      Math.floor(Math.random() * (currentUserB - currentUserA + 1)) +
-      currentUserA;
-    document.getElementById("computerGuess").innerText =
-      "IS IT: " + String(computerGuess) + "?";
+function reSetupGame() {
+  reInitializeVariables();
+  userGuessInptElem.disabled = false;
+  makeGuessBtnElem.disabled = false;
+  computerAnswerElem.innerText = "";
+  computerGuessElem.innerText = "";
+  userGuessInptElem.value = "";
+  userGuessInptElem.focus();
+  initialPhraseElem.style.display = "block";
+}
+
+function reInitializeVariables() {
+  NUM = Math.floor(Math.random() * (B - A + 1)) + A;
+  currentA = A;
+  currentB = B;
+  currentUserA = A;
+  currentUserB = B;
+  counter = 0;
+  computerWon = false;
+  userWon = false;
+  userInput = null;
+  userInputParsed = null;
+  computerGuess = null;
+  console.log("Computer's number: ", NUM);
+}
+
+function usersNumIsBigger() {
+  if (computerGuess === 100) {
+    currentUserA = Math.max(computerGuess, currentUserA);
   } else {
     currentUserA = Math.max(computerGuess + 1, currentUserA);
-    document.getElementById("makeGuess").disabled = false;
-    toggleComputerButtons(true);
-    document.getElementById("computerGuess").innerText = "Hmmmmm...";
+  }
+  if (userWon) {
+    computerMakesAGuess();
+  } else {
+    passGuessToUser();
   }
 }
 
-function toggleComputerButtons(param) {
-  document.getElementById("less").disabled = param;
-  document.getElementById("yes").disabled = param;
-  document.getElementById("more").disabled = param;
+function computerMakesAGuess() {
+  computerGuess =
+    Math.floor(Math.random() * (currentUserB - currentUserA + 1)) +
+    currentUserA;
+  computerGuessElem.innerText =
+    "Is your number: " + String(computerGuess) + "?";
 }
-function makeGuess() {
+
+function passGuessToUser() {
+  setLessYesMoreBtnsTo(false);
+  makeGuessBtnElem.disabled = false;
+  computerGuessElem.innerText = "Hmmmmm... \n Your turn";
+}
+
+function setLessYesMoreBtnsTo(param) {
+  document.getElementById("lessBtn").disabled = !param;
+  document.getElementById("yesBtn").disabled = !param;
+  document.getElementById("moreBtn").disabled = !param;
+}
+
+function parseUserInput() {
+  userInput = userGuessInptElem.value;
+  userInputParsed = parseInt(userInput);
+  console.log("userInputParsed", userInputParsed);
+}
+
+function userMakesGuess() {
+  initialPhraseElem.style.display = "none";
   counter++;
   try {
-    userInput = document.getElementById("userGuess").value;
-    userInputParsed = parseInt(userInput);
-    console.log("userInputParsed", userInputParsed);
-
+    parseUserInput();
     if (userInput === null) {
-      document.getElementById("computerAnswer").innerText =
-        "Please make a guess.";
+      computerAnswerElem.innerText = "Please make a guess.";
     } else if (isNaN(userInputParsed)) {
-      document.getElementById("computerAnswer").innerText =
-        "Input must be a number.";
+      computerAnswerElem.innerText = "Input must be a number.";
     } else if (userInputParsed < NUM) {
-      document.getElementById("computerAnswer").innerText =
-        "No, it's bigger then " + userInputParsed;
+      computerAnswerElem.innerText = "No, it's bigger then " + userInputParsed;
       currentA = Math.max(userInputParsed + 1, currentA);
     } else if (userInputParsed > NUM) {
-      document.getElementById("computerAnswer").innerText =
-        "No, it's less then " + userInputParsed;
+      computerAnswerElem.innerText = "No, it's less then " + userInputParsed;
       currentB = Math.min(userInputParsed - 1, currentB);
     } else if (userInputParsed === NUM) {
-      document.getElementById("computerAnswer").innerText = `CONGRATULATIONS! \
-          \nYOU'VE GOT IT! \
-            \nIT TOOK YOU ${counter} TRIES `;
-      document.getElementById("userGuess").disabled = true;
-      document.getElementById("makeGuess").disabled = true;
-      if (!computerWon) toggleComputerButtons(false);
+      computerAnswerElem.innerText = `CONGRATULATIONS! \nYOU'VE GOT IT! \nIT TOOK YOU ${counter} TRIES `;
+      userGuessInptElem.disabled = true;
+      makeGuessBtnElem.disabled = true;
+      if (!computerWon) setLessYesMoreBtnsTo(true);
       userWon = true;
-      // if (computerWon && prompt(`DO YOU WANT TO PLAY MORE?`)) {
-      //   document.getElementById("makeGuess").disabled = true;
-      //   NUM = Math.floor(Math.random() * (B - A + 1)) + A;
-      //   currentA = A;
-      //   currentB = B;
-      //   currentUserA = A;
-      //   currentUserB = B;
-      //   counter = 0;
-      //   computerWon = false;
-      //   console.log("Computer's number: ", NUM);
-      // } else if (!prompt(`DO YOU WANT TO PLAY MORE?`)) {
-      //   alert("Bye.");
-      // }
+      if (userWon && computerWon && confirm("Would you like to play more?")) {
+        reSetupGame();
+      }
     } else {
       alert("Error");
     }
@@ -113,16 +150,12 @@ function makeGuess() {
     alert(e);
   }
   if (!computerWon) {
-    computerGuess =
-      Math.floor(Math.random() * (currentUserB - currentUserA + 1)) +
-      currentUserA;
-    document.getElementById("computerGuess").innerText =
-      "IS IT: " + String(computerGuess) + "?";
-    toggleComputerButtons(false);
-    document.getElementById("makeGuess").disabled = true;
+    computerMakesAGuess();
+    setLessYesMoreBtnsTo(true);
+    makeGuessBtnElem.disabled = true;
   }
-  document.getElementById("A").innerText = currentA;
-  document.getElementById("B").innerText = currentB;
-  document.getElementById("userGuess").value = "";
-  document.getElementById("userGuess").focus();
+  AElem.innerText = currentA;
+  BElem.innerText = currentB;
+  userGuessInptElem.value = "";
+  userGuessInptElem.focus();
 }
