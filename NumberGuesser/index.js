@@ -13,6 +13,14 @@ console.log(A, B, "Computer's number: ", NUM);
 while (1) {
   counter++;
   try {
+    A = prompt(
+      'Would you like to set a range? \n\
+            If yes - input bottom border; otherwise - press "Cancel"'
+    );
+    if (A === null) {
+      A = 0;
+    } else {
+    }
     userInput = prompt(
       "Guess number in range " + currentA + " and " + currentB
     );
