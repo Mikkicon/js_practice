@@ -1,19 +1,22 @@
 "use strict";
+
 const A = 0;
 const B = 100;
-var computerGuess = null;
+var counter = 0;
 var currentA = A;
 var currentB = B;
 var currentUserA = A;
 var currentUserB = B;
 var NUM = Math.floor(Math.random() * (B - A + 1)) + A;
-var userInput = null;
-var userInputParsed = null;
-var computerWon = false;
-var userWon = false;
-var counter = 0;
 
-var AElem = document.getElementById("A");
+var userInput = null;
+var computerGuess = null;
+var userInputParsed = null;
+
+var userWon = false;
+var computerWon = false;
+
+var AElem = window.document.getElementById("A");
 var BElem = document.getElementById("B");
 var makeGuessBtnElem = document.getElementById("makeGuessBtn");
 var initialPhraseElem = document.getElementById("initialPhrase");
@@ -25,7 +28,7 @@ console.log(A, B, "Computer's number: ", NUM);
 
 AElem.innerText = currentA;
 BElem.innerText = currentB;
-setLessYesMoreBtnsTo(false);
+setLessYesMoreBtnsDisabledTo(false);
 userGuessInptElem.focus();
 
 function usersNumIsSmaller() {
@@ -40,11 +43,12 @@ function usersNumIsSmaller() {
     passGuessToUser();
   }
 }
+
 function onComputerWin() {
   document.getElementById(
     "computerGuessH1"
   ).innerText = `MAN, IT FEELS GOOD TO WIN IN ${counter} TRIES :)`;
-  setLessYesMoreBtnsTo(false);
+  setLessYesMoreBtnsDisabledTo(false);
   if (!userWon) makeGuessBtnElem.disabled = false;
   computerWon = true;
   if (userWon && computerWon && confirm("Would you like to play more?")) {
@@ -102,12 +106,12 @@ function computerMakesAGuess() {
 }
 
 function passGuessToUser() {
-  setLessYesMoreBtnsTo(false);
+  setLessYesMoreBtnsDisabledTo(false);
   makeGuessBtnElem.disabled = false;
   computerGuessElem.innerText = "Hmmmmm... \n Your turn";
 }
 
-function setLessYesMoreBtnsTo(param) {
+function setLessYesMoreBtnsDisabledTo(param) {
   document.getElementById("lessBtn").disabled = !param;
   document.getElementById("yesBtn").disabled = !param;
   document.getElementById("moreBtn").disabled = !param;
@@ -138,7 +142,7 @@ function userMakesGuess() {
       computerAnswerElem.innerText = `CONGRATULATIONS! \nYOU'VE GOT IT! \nIT TOOK YOU ${counter} TRIES `;
       userGuessInptElem.disabled = true;
       makeGuessBtnElem.disabled = true;
-      if (!computerWon) setLessYesMoreBtnsTo(true);
+      if (!computerWon) setLessYesMoreBtnsDisabledTo(true);
       userWon = true;
       if (userWon && computerWon && confirm("Would you like to play more?")) {
         reSetupGame();
@@ -151,7 +155,7 @@ function userMakesGuess() {
   }
   if (!computerWon) {
     computerMakesAGuess();
-    setLessYesMoreBtnsTo(true);
+    setLessYesMoreBtnsDisabledTo(true);
     makeGuessBtnElem.disabled = true;
   }
   AElem.innerText = currentA;
