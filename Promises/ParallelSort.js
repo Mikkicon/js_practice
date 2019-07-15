@@ -70,7 +70,7 @@ function mergeSort(arr) {
     new Promise((resolve, reject) => resolve(mergeSort(left))),
     new Promise((resolve, reject) => resolve(mergeSort(right)))
   ]).then(([leftPromise, rightPromise]) => merge(leftPromise, rightPromise));
-  // return merge(promiseStack.pop(), promiseStack.pop());
+  return merge(mergeSort(left), mergeSort(right));
 }
 
 // compare the arrays item by item and return the concatenated result
