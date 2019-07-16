@@ -53,7 +53,7 @@ var array = [...new Array(100)]
 //   .then(a => console.log("MergeArray: ", a));
 var promiseStack = [];
 // Split the array into halves and merge them recursively
-function mergeSort(arr) {
+async function mergeSort(arr) {
   if (arr.length === 1) {
     // return once we hit an array with a single item
 
@@ -65,13 +65,14 @@ function mergeSort(arr) {
   const right = arr.slice(middle); // items on the right side
   // promiseStack.push(mergeSort(left));
   // promiseStack.push(mergeSort(right));
-
-  Promise.all([
+  let [leftPromise, rightPromise] = await Promise.all([
     new Promise((resolve, reject) => resolve(mergeSort(left))),
     new Promise((resolve, reject) => resolve(mergeSort(right)))
-  ]).then(([leftPromise, rightPromise]) => merge(leftPromise, rightPromise));
-  return merge(mergeSort(left), mergeSort(right));
+  ]);
+
+  return merge(leftPromise, rightPromise);
 }
+// Promise.resolve(mergeSort([3])).then(a => console.log("a", a));
 
 // compare the arrays item by item and return the concatenated result
 function merge(left, right) {
@@ -92,7 +93,7 @@ function merge(left, right) {
 }
 
 const list = [2, 5, 1, 3, 7, 2, 3, 8, 6, 3];
-console.log(mergeSort(list)); // [ 1, 2, 2, 3, 3, 3, 5, 6, 7, 8 ]
+mergeSort(list).then(v => console.log(v)); // [ 1, 2, 2, 3, 3, 3, 5, 6, 7, 8 ]
 
 var cmp = mask => {
   mask = mask
