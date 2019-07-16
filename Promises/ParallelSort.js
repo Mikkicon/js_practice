@@ -8,50 +8,6 @@ var array = [...new Array(100)]
 
   '7u 3d 1u 2u 4d 6d 5u 8d'
 */
-// let promise1 = new Promise((resolve, reject) =>
-//   setTimeout(resolve, 5000, "foo")
-// );
-// let promise2 = new Promise((resolve, reject) =>
-//   setTimeout(resolve, 5000, "bar")
-// );
-
-// Promise.all([promise2, promise1]).then(val => console.log(val));
-
-// let arr = [4, 2, 5, 3, 7, 5, 9, 5];
-// let promiseArray = [];
-
-// function fillStack() {
-//   for (let i = 0; i < 3; i++) {
-//     const middle = Math.floor(arr.length / 2); // get the middle item of the array rounded down
-//     const left = arr.slice(0, middle); // items on the left side
-//     const right = arr.slice(middle); // items on the right side
-
-//     promiseArray.push(Promise.resolve(left.sort()));
-//     promiseArray.push(Promise.resolve(right.sort()));
-//     arr = arr.slice(middle);
-//   }
-// }
-
-// let aaa = Promise.resolve(fillStack());
-// aaa.then(value => console.log(promiseArray));
-// let mergeArray = [];
-// function mrg(promiseArray) {
-//   for (let i = 0; i < 3; i++) {
-//     let a = promiseArray.pop();
-//     let b = promiseArray.pop();
-//     mergeArray.push(merge(a, b));
-//   }
-//   return mergeArray;
-// }
-
-// Promise.all(promiseArray)
-//   .then(promises => {
-//     console.log(promises);
-//     mrg(promises);
-//     return mergeArray;
-//   })
-//   .then(a => console.log("MergeArray: ", a));
-var promiseStack = [];
 // Split the array into halves and merge them recursively
 async function mergeSort(arr) {
   if (arr.length === 1) {
