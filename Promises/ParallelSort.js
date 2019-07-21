@@ -9,7 +9,7 @@ var array = [...new Array(100)]
   '7u 3d 1u 2u 4d 6d 5u 8d'
 */
 // Split the array into halves and merge them recursively
-async function mergeSort(arr) {
+async function parallelSort(arr) {
   if (arr.length === 1) {
     // return once we hit an array with a single item
 
@@ -29,7 +29,19 @@ async function mergeSort(arr) {
   return merge(leftPromise, rightPromise);
 }
 // Promise.resolve(mergeSort([3])).then(a => console.log("a", a));
+function mergeSort(arr) {
+  if (arr.length === 1) {
+    // return once we hit an array with a single item
 
+    return arr;
+  }
+
+  const middle = Math.floor(arr.length / 2); // get the middle item of the array rounded down
+  const left = arr.slice(0, middle); // items on the left side
+  const right = arr.slice(middle); // items on the right side
+
+  return merge(mergeSort(left), mergeSort(right));
+}
 // compare the arrays item by item and return the concatenated result
 function merge(left, right) {
   let result = [];
@@ -47,9 +59,18 @@ function merge(left, right) {
   }
   return result.concat(left.slice(indexLeft)).concat(right.slice(indexRight));
 }
+var array = [...new Array(10000)]
+  .map((_, index) => index)
+  .sort(() => 0.5 - Math.random());
 
-const list = [2, 5, 1, 3, 7, 2, 3, 8, 6, 3];
-mergeSort(list).then(v => console.log(v)); // [ 1, 2, 2, 3, 3, 3, 5, 6, 7, 8 ]
+// const list = [2, 5, 1, 3, 7, 2, 3, 8, 6, 3];
+console.time("parallelSort");
+parallelSort(array).then(v => console.log(v));
+console.timeEnd("parallelSort");
+
+console.time("mergeSort");
+console.log(mergeSort(array));
+console.timeEnd("mergeSort");
 
 var cmp = mask => {
   mask = mask
