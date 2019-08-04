@@ -23,68 +23,112 @@ function sendAJAXCall(path, callback) {
   xhr.send();
 }
 
-function loadPosts() {
+// LOADERS
+
+function loadAllPosts() {
   var container = document.getElementById("container");
   container.innerHTML = "";
-  sendAJAXCall("posts", response => generatePostsNodes(response));
+  sendAJAXCall("posts", response => mainPageGen(response));
 }
-
-function loadPost(id) {
+function loadPostsByUser(userId) {
   var container = document.getElementById("container");
+  container.innerHTML = "";
+  sendAJAXCall("posts?userId=" + userId, response => {
+    mainPageGen(response);
+  });
+}
+function loadPost(id) {
+  var elementOutline = {
+    id: ["b", "Post id: "],
+    userId: ["label", "User: "],
+    title: ["h3", "Title: "],
+    body: ["p", ""]
+  };
+  var container = document.getElementById("container");
+  container.innerHTML = "";
   sendAJAXCall("posts/" + id, response => {
-    container.innerHTML = "";
-    container.appendChild(generateNode(response, correspondingTags));
+    container.appendChild(buildPostElement(response, elementOutline, true));
   });
 }
 
-function loadCommentsForPost(postId) {
-  var container = document.getElementById("container");
-  sendAJAXCall("posts/" + postId + "/comments", response =>
-    container.appendChild(generateCommentsNodes(response))
+function loadCommentsForPost(postId, event) {
+  sendAJAXCall("comments?postId=" + postId, response =>
+    generateCommentsNodes(response)
   );
 }
 
-function generatePostsNodes(response) {
-  var outline = {
-    id: ["b", "Post: "],
-    userId: ["label", "User: "],
-    title: ["h3", ""],
-    body: ["p", ""],
-    comments: [
-      "button",
-      "Go to comments",
-      {
-        property: "comments",
-        dataId: "id",
-        event: "click",
-        function: id => loadPost(id)
-      }
-    ]
+// GENERATORS
+
+function mainPageGen(response) {
+  var elementOutline = {
+    id: ["b", "Post id: "],
+    userId: ["button", "Posts by user: "],
+    title: ["h3", "Title: "],
+    body: ["p", ""]
   };
   response.map(post => {
-    var currentPost = generateNode(post, outline);
+    var currentPost = buildPostElement(post, elementOutline);
     container.appendChild(currentPost);
   });
 }
 
-function generateNode(data, outline, evtListeners = {}) {
+function generateCommentsNodes(response) {
+  var elementOutline = {
+    postId: ["b", ""],
+    id: ["b", "User id: "],
+    name: ["h3", "Name: "],
+    email: ["label", "E-mail: "],
+    body: ["p", ""]
+  };
+  response.map(comment => {
+    var currentComment = buildCommentElement(comment, elementOutline);
+    container.appendChild(currentComment);
+  });
+}
+
+// BUILDERS
+
+function buildPostElement(post, elementOutline, postById = false) {
   let currentPost = document.createElement("div");
   let contents = {};
-  for (const key in outline) {
-    if (outline.hasOwnProperty(key) && data.hasOwnProperty(key)) {
-      contents[key] = document.createElement(outline[key][0]);
-      contents[key].innerText = outline[key][1] + data[key];
-    }
+
+  for (const key in post) {
+    contents[key] = document.createElement(elementOutline[key][0]);
+    contents[key].innerText = elementOutline[key][1] + post[key];
   }
-  if (evtListeners.length) {
-    contents[evtListeners.property].addEventListener(
-      evtListeners.event,
-      evtListeners.function(data[evtListeners.dataId])
+
+  contents["comments"] = document.createElement("button");
+  if (postById) {
+    contents["comments"].innerText = "Load all comments";
+    contents["comments"].addEventListener("click", function handler(e) {
+      e.target.removeEventListener(e.type, handler);
+      return loadCommentsForPost(post.id);
+    });
+  } else {
+    contents["userId"].addEventListener("click", () =>
+      loadPostsByUser(post.id)
     );
+    contents["comments"].innerText = "Go to comments";
+    contents["comments"].addEventListener("click", () => loadPost(post.id));
   }
 
   for (const key in contents) {
     currentPost.appendChild(contents[key]);
   }
   return currentPost;
+}
+
+function buildCommentElement(comment, outline) {
+  let currentComment = document.createElement("div");
+  let contents = {};
+
+  for (const key in comment) {
+    contents[key] = document.createElement(outline[key][0]);
+    contents[key].innerText = outline[key][1] + comment[key];
+  }
+  for (const key in contents) {
+    currentComment.appendChild(contents[key]);
+  }
+
+  return currentComment;
 }
