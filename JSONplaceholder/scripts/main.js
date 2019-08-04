@@ -10,95 +10,79 @@
 //PATCH	/posts/1
 //DELETE /posts/1
 
-var correspondingTags = {
-  id: "b",
-  userId: "label",
-  title: "h3",
-  body: "p",
-  comments: "button"
-};
-async function loadPosts() {
-  console.log(location.href);
-  var container = document.getElementById("container");
-  container.innerHTML = "";
+function sendAJAXCall(path, callback) {
   var xhr = new XMLHttpRequest(),
     method = "GET",
-    url = "https://jsonplaceholder.typicode.com/posts/";
+    url = "https://jsonplaceholder.typicode.com/" + path;
   xhr.open(method, url, true);
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4 && xhr.status === 200) {
-      var response = JSON.parse(xhr.response);
-      generatePostsNodes(response);
+      callback(JSON.parse(xhr.response));
     }
   };
   xhr.send();
 }
 
+function loadPosts() {
+  var container = document.getElementById("container");
+  container.innerHTML = "";
+  sendAJAXCall("posts", response => generatePostsNodes(response));
+}
+
+function loadPost(id) {
+  var container = document.getElementById("container");
+  sendAJAXCall("posts/" + id, response => {
+    container.innerHTML = "";
+    container.appendChild(generateNode(response, correspondingTags));
+  });
+}
+
+function loadCommentsForPost(postId) {
+  var container = document.getElementById("container");
+  sendAJAXCall("posts/" + postId + "/comments", response =>
+    container.appendChild(generateCommentsNodes(response))
+  );
+}
+
 function generatePostsNodes(response) {
+  var outline = {
+    id: ["b", "Post: "],
+    userId: ["label", "User: "],
+    title: ["h3", ""],
+    body: ["p", ""],
+    comments: [
+      "button",
+      "Go to comments",
+      {
+        property: "comments",
+        dataId: "id",
+        event: "click",
+        function: id => loadPost(id)
+      }
+    ]
+  };
   response.map(post => {
-    var currentPost = generatePostNode(post, correspondingTags);
+    var currentPost = generateNode(post, outline);
     container.appendChild(currentPost);
   });
 }
 
-function loadPost(id) {
-  var xhr = new XMLHttpRequest(),
-    method = "GET",
-    url = "https://jsonplaceholder.typicode.com/posts/" + id;
-  xhr.open(method, url, true);
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-      var response = JSON.parse(xhr.response);
-      var container = document.getElementById("container");
-      container.innerHTML = "";
-      container.appendChild(
-        generatePostNode(response, correspondingTags, {
-          innerText: "Load all comments",
-          function: loadCommentsForPost(id)
-        })
-      );
-    }
-  };
-  xhr.send();
-}
-
-function loadCommentsForPost(postId) {
-  var localCT = Object.assign({}, correspondingTags);
-  delete localCT.userId;
-  delete localCT.title;
-  delete localCT.comments;
-  localCT.name = null;
-  localCT.email = null;
-  var xhr = new XMLHttpRequest(),
-    method = "GET",
-    url = "https://jsonplaceholder.typicode.com/posts/" + postId + "/comments";
-  xhr.open(method, url, true);
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-      var response = JSON.parse(xhr.response);
-      var container = document.getElementById("container");
-      container.appendChild(generateCommentsNodes(response, localCT));
-    }
-  };
-  xhr.send();
-}
-
-function generatePostNode(post, correspondingTags, commentsProperties = {}) {
+function generateNode(data, outline, evtListeners = {}) {
   let currentPost = document.createElement("div");
   let contents = {};
-  for (const key in correspondingTags) {
-    contents[key] = document.createElement(correspondingTags[key]);
+  for (const key in outline) {
+    if (outline.hasOwnProperty(key) && data.hasOwnProperty(key)) {
+      contents[key] = document.createElement(outline[key][0]);
+      contents[key].innerText = outline[key][1] + data[key];
+    }
   }
-  contents["userId"].innerText = "User: " + post.userId;
-  contents["id"].innerText = "Post: " + post.id;
-  contents["title"].innerText = post.title;
-  contents["body"].innerText = post.body;
-  contents["comments"].innerText =
-    commentsProperties.innerText || "Go to comments";
-  contents["comments"].addEventListener(
-    "click",
-    () => commentsProperties.function || loadPost(post.id)
-  );
+  if (evtListeners.length) {
+    contents[evtListeners.property].addEventListener(
+      evtListeners.event,
+      evtListeners.function(data[evtListeners.dataId])
+    );
+  }
+
   for (const key in contents) {
     currentPost.appendChild(contents[key]);
   }
