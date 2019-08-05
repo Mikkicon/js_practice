@@ -26,8 +26,6 @@ function sendAJAXCall(path, callback, method = "GET", body = {}) {
 // LOADERS
 
 function loadAllPosts() {
-  console.log("loadAllPosts");
-
   var container = document.getElementById("container");
   container.innerHTML = "";
   sendAJAXCall("posts", response => mainPageGen(response));
@@ -94,7 +92,7 @@ function generateNewPost() {
   var container = document.getElementById("container");
   var fstChild = container.firstChild;
   var elementOutline = {
-    id: ["b", "Post id: " + (container.childElementCount + 1)],
+    id: ["b", container.childElementCount + 1],
     userId: ["input", "User Id: "],
     title: ["input", "Title: "],
     body: ["input", "Body: "],
@@ -104,10 +102,11 @@ function generateNewPost() {
   container.insertBefore(post, fstChild);
 }
 
-function generateNewPostElement() {
+function sendPost() {
   var contents = {};
   return function(key, value) {
-    if (value === "submit")
+    if (key === "submit") {
+      contents["id"] = value;
       sendAJAXCall(
         "posts/",
         () => {
@@ -116,8 +115,8 @@ function generateNewPostElement() {
         "POST",
         JSON.stringify(contents)
       );
+    }
     contents[key] = value;
-    console.log(contents);
   };
 }
 
@@ -127,12 +126,14 @@ function buildPostElement(post, elementOutline, postById = false) {
   let currentPost = document.createElement("div");
   let contents = {};
 
+  currentPost.appendChild(document.createElement("br"));
   for (const key in post) {
     contents[key] = document.createElement(elementOutline[key][0]);
     contents[key].innerText = elementOutline[key][1] + post[key];
   }
 
   contents["comments"] = document.createElement("button");
+
   if (postById) {
     contents["comments"].innerText = "Load all comments";
     contents["comments"].addEventListener("click", function handler(e) {
@@ -140,16 +141,25 @@ function buildPostElement(post, elementOutline, postById = false) {
       return loadCommentsForPost(post.id);
     });
   } else {
+    contents["delete"] = document.createElement("button");
     contents["userId"].addEventListener("click", () =>
       loadPostsByUser(post.userId)
     );
     contents["comments"].innerText = "Go to comments";
+    contents["delete"].innerText = "Delete Post";
     contents["comments"].addEventListener("click", () => loadPost(post.id));
+    contents["delete"].addEventListener("click", () =>
+      sendAJAXCall("posts/" + post.id, () =>
+        alert("Post " + post.id + " has been deleted.")
+      )
+    );
   }
 
   for (const key in contents) {
     currentPost.appendChild(contents[key]);
   }
+
+  currentPost.appendChild(document.createElement("hr"));
   return currentPost;
 }
 
@@ -169,16 +179,16 @@ function buildCommentElement(comment, outline) {
 function buildNewPost(elementOutline) {
   let newPost = document.createElement("div");
   let contents = {};
-  let gen = generateNewPostElement();
+  let gen = sendPost();
   for (const key in elementOutline) {
     contents[key] = document.createElement(elementOutline[key][0]);
     if (key === "id") {
-      contents[key].innerText = elementOutline[key][1];
+      contents[key].innerText = "Post id: " + elementOutline[key][1];
     } else if (key === "button") {
       contents[key].innerText = elementOutline[key][1];
       contents[key].addEventListener("click", function handler(e) {
         e.target.removeEventListener(e.type, handler);
-        return gen(key, "submit");
+        return gen("submit", parseInt(elementOutline["id"][1]));
       });
     } else {
       contents[key].placeholder = elementOutline[key][1];
